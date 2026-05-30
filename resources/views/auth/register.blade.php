@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerTrack — Inscription</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+<div class="w-full max-w-lg">
+    <div class="flex items-center gap-2 mb-8">
+        <svg class="w-8 h-8 text-[#1A3A5C]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+        <span class="text-2xl font-extrabold text-[#1A3A5C]">PowerTrack</span>
+    </div>
+    <h2 class="text-2xl font-extrabold text-gray-900 mb-1">Créer un compte</h2>
+    <p class="text-gray-400 text-sm mb-6">Commencez à suivre votre consommation électrique</p>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        @if($errors->any())
+            <div class="bg-red-50 text-red-600 text-sm font-semibold px-4 py-3 rounded-xl mb-4">
+                @foreach($errors->all() as $e) {{ $e }}<br> @endforeach
+            </div>
+        @endif
+
+        <form method="POST" action="/register" class="grid grid-cols-2 gap-x-4">
+            @csrf
+            <div class="col-span-2">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Nom complet *</label>
+                <input type="text" name="nom" value="{{ old('nom') }}" required
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4" placeholder="Jean Dupont">
+            </div>
+            <div class="col-span-2">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Email *</label>
+                <input type="email" name="email" value="{{ old('email') }}" required
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4" placeholder="votre@email.com">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Mot de passe *</label>
+                <input type="password" name="password" required
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4" placeholder="Min. 6 caractères">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Confirmation *</label>
+                <input type="password" name="password_confirmation" required
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4" placeholder="Répéter">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Type de compte</label>
+                <select name="type_compte" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4">
+                    <option value="Particulier">Particulier</option>
+                    <option value="Entreprise">Entreprise</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Nb personnes/employés</label>
+                <input type="number" name="nombre_utilisateurs" value="{{ old('nombre_utilisateurs',1) }}" min="1"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Coût du kWh</label>
+                <input type="number" name="cout_kwh" value="{{ old('cout_kwh',100) }}" step="0.01"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4" placeholder="100">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Devise</label>
+                <select name="devise" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#1A3A5C] mb-4">
+                    <option value="FCFA">FCFA (F)</option>
+                    <option value="EUR">Euro (€)</option>
+                    <option value="USD">Dollar ($)</option>
+                </select>
+            </div>
+            <div class="col-span-2 mt-2">
+                <button type="submit" class="w-full bg-[#1A3A5C] text-white py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity">
+                    Créer mon compte
+                </button>
+            </div>
+        </form>
+    </div>
+    <p class="text-center text-sm text-gray-500 mt-4">
+        Déjà un compte ? <a href="/login" class="text-[#1A3A5C] font-bold hover:underline">Se connecter</a>
+    </p>
+</div>
+</body>
+</html>
