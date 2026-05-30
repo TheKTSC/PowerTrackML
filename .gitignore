@@ -27,3 +27,6 @@ Thumbs.db
 venv/
 __pycache__/
 *.py[cod]
+
+# Machine learning artifacts
+ml_api/*.pkl
