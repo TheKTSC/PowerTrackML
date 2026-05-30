@@ -125,6 +125,8 @@ Application Laravel + API Flask pour la détection d’alertes et la visualisati
 - Sur Render, utilisez le dossier `ml_api/` et configurez le runtime Python.
 - Mettre à jour `FLASK_API_URL` dans le dashboard Laravel avec l’URL publique du service Flask.
 
+Pour une procédure pas-à-pas et des scripts utiles (téléchargement du modèle, commandes de build), voir le guide dédié : [DEPLOY_RAILWAY.md](DEPLOY_RAILWAY.md)
+
 ## Suivi de marche à suivre
 
 Sur GitHub, créez une issue ou un projet pour suivre :
