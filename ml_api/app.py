@@ -5,16 +5,38 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
+import pickle
+from huggingface_hub import hf_hub_download
 
 MODEL_FILE = os.environ.get('MODEL_FILE', os.path.join(os.path.dirname(__file__), 'model_elec.pkl'))
 DEFAULT_MODEL_FILE = os.path.join(os.path.dirname(__file__), 'model_rf.pkl')
 SCALER_FILE = os.environ.get('SCALER_FILE', os.path.join(os.path.dirname(__file__), 'scaler_elec.pkl'))
 DEFAULT_SCALER_FILE = os.path.join(os.path.dirname(__file__), 'scaler_rf.pkl')
+MODEL_PATH = "model_elec.pkl"
 
 app = Flask(__name__)
 
 LOADED_SCALER = None
 
+def load_model():
+    # Si le .pkl est déjà présent localement
+    if os.path.exists(MODEL_PATH):
+        print("📦 Chargement du modèle local...")
+        with open(MODEL_PATH, "rb") as f:
+            return pickle.load(f)
+
+    # Sinon téléchargement depuis Hugging Face
+    print("📥 Téléchargement depuis Hugging Face...")
+    path = hf_hub_download(
+        repo_id=os.environ.get("HF_REPO_ID"),
+        filename="model.pkl",
+        token=os.environ.get("HF_TOKEN")
+    )
+    with open(path, "rb") as f:
+        return pickle.load(f)
+
+model = load_model()
+print("✅ Modèle chargé avec succès")
 
 def resolve_file(primary, fallback=None):
     if os.path.exists(primary):
